@@ -169,7 +169,7 @@ def main():
         elif val == "6":
             export_contacts()
         elif val == "7":
-            count_contacts()  # Fixad anrop
+            count_contacts()
         elif val == "0":
             break
         else:
