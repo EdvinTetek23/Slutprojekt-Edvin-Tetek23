@@ -8,7 +8,6 @@ def add_contact():
     
     print("Kontakt sparad!")
 
-
 def show_contacts():
     try:
         with open("kontakter.txt", "r") as file:
@@ -18,12 +17,11 @@ def show_contacts():
             print("Inga kontakter sparade.")
             return
         
-        
         print(f"\n{'Namn':<20} {'Telefon':<15} {'Email'}")
         print("-" * 55)
         for kontakt in kontakter:
             delar = kontakt.strip().split(",")
-            name, number, email = delar[0]
+            name = delar[0]
             number = delar[1] if len(delar) > 1 else ""
             email = delar[2] if len(delar) > 2 else ""
             print(f"{name:<20} {number:<15} {email}")
@@ -41,7 +39,8 @@ def search_contact():
         found = False
         for kontakt in kontakter:
             delar = kontakt.strip().split(",")
-            name, number, email = delar[0], delar[1], delar[2] if len(delar) > 2 else ""
+            name = delar[0]
+            number = delar[1] if len(delar) > 1 else ""
             email = delar[2] if len(delar) > 2 else ""
             if search in name.lower():
                 print(f"Hittad: {name} - {number} - {email}")
@@ -69,7 +68,7 @@ def remove_contact():
             else:
                 removed = True
                 
-        with open ("kontakt borttagen.txt", "w") as file:
+        with open("kontakter.txt", "w") as file:  # Fixat filnamn
             file.writelines(kvar)
         
         if removed:
@@ -80,7 +79,6 @@ def remove_contact():
     except FileNotFoundError:
         print("Ingen kontaktlista finns ännu.")
         
-
 def edit_contact():
     name_to_edit = input("Namn att redigera: ").lower()
  
@@ -114,7 +112,6 @@ def edit_contact():
     except FileNotFoundError:
         print("Ingen kontaktlista finns ännu.")
  
- 
 def export_contacts():
     """Export contacts to a readable text summary."""
     try:
@@ -135,10 +132,8 @@ def export_contacts():
                 out.write(f"{i}. {name}\n   Tel: {number}\n   Email: {email}\n\n")
  
         print(f"Exporterat {len(kontakter)} kontakter till kontakter_export.txt")
- 
     except FileNotFoundError:
         print("Ingen kontaktlista finns ännu.")
- 
  
 def count_contacts():
     try:
@@ -147,8 +142,6 @@ def count_contacts():
         print(f"Antal kontakter: {len(lines)}")
     except FileNotFoundError:
         print("Ingen kontaktlista finns ännu.")
- 
-        
         
 def main():
     while True:
@@ -156,6 +149,9 @@ def main():
         print("2. Visa alla kontakter")
         print("3. Sök kontakt")
         print("4. Ta bort kontakt")
+        print("5. Redigera kontakt")
+        print("6. Exportera kontakter")
+        print("7. Räkna kontakter")
         print("0. Avsluta")
         
         val = input("\nVal: ")
@@ -172,8 +168,8 @@ def main():
             edit_contact()
         elif val == "6":
             export_contacts()
-        elif val == "7": 
-            remove_contact()
+        elif val == "7":
+            count_contacts()  # Fixad anrop
         elif val == "0":
             break
         else:
